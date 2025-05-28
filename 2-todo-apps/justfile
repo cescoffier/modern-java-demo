@@ -1,0 +1,34 @@
+start-infra:
+ podman run --ulimit memlock=-1:-1 -d -it --rm=true --name=todo-database \
+        -e POSTGRES_USER=todos \
+        -e POSTGRES_PASSWORD=todos \
+        -e POSTGRES_DB=todos \
+        -p 5432:5432 postgres:16-alpine
+
+stop-infra:
+    podman stop todo-database
+
+restart-infra: stop-infra start-infra
+
+populate host:
+    curl -H "Content-Type: application/json" {{host}}/api
+    curl -X POST -H "Content-Type: application/json" -d '{"title":"Todo 1"}' {{host}}/api
+    curl -X POST -H "Content-Type: application/json" -d '{"title":"Todo 2"}' {{host}}/api
+    curl -X POST -H "Content-Type: application/json" -d '{"title":"Todo 3"}' {{host}}/api
+    # Add and complete a todo
+    curl -s -X POST -H "Content-Type: application/json" -d '{"title":"Todo 5"}' {{host}}/api | jq '.id' | xargs -I {} curl -X PATCH -H "Content-Type: application/json" -d '{"completed":true, "title": "Todo 5"}' {{host}}/api/{}
+
+start-spring-jvm:
+    cd todo-app-spring  && java -Xmx128m -Xms128m -Dspring.profiles.active=production -jar target/todo-app-spring-1.0-SNAPSHOT.jar
+
+start-spring-native:
+    cd todo-app-spring  && ./target/todo-app-spring -Xmx64m -Xms64m -Dspring.profiles.active=production
+
+start-quarkus-jvm:
+    cd todo-app-quarkus  && java -Xmx128m -Xms128m -jar target/quarkus-app/quarkus-run.jar
+
+start-quarkus-native:
+    cd todo-app-quarkus  && ./target/todo-app-quarkus-1.0-SNAPSHOT-runner -Xmx64m -Xms64m
+
+load host:
+    wrk.sh --latency --timeout 1s -t 2 -c 400 -d 10s {{host}}/api
