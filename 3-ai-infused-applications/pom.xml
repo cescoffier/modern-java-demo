@@ -41,6 +41,7 @@
         <module>3-sentiment-analysis</module>
         <module>4-images</module>
         <module>5-rag</module>
+        <module>6-contextual-rag</module>
         <module>7-function-calling</module>
         <module>8-observability</module>
         <module>9-quarkus-mcp/1-quarkus-mcp-server</module>

@@ -20,7 +20,11 @@ public class Main implements QuarkusApplication {
 
     @Override
     public int run(String... args) throws IOException {
-        var article = Files.readString(new File("load-shedding.txt").toPath());
+        File file = new File("3-ai-infused-applications/2-summarization/load-shedding.txt");
+        if (!file.exists()) {
+            file = new File("load-shedding.txt");
+        }
+        var article = Files.readString(file.toPath());
         System.out.println(ai.summarize(article));
         return 0;
     }

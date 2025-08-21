@@ -6,6 +6,7 @@ import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.store.embedding.CosineSimilarity;
 import io.quarkiverse.langchain4j.response.AiResponseAugmenter;
 import io.quarkiverse.langchain4j.response.ResponseAugmenterParams;
+import io.quarkus.virtual.threads.VirtualThreads;
 import io.smallrye.mutiny.Multi;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -13,6 +14,7 @@ import jakarta.inject.Inject;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executor;
 
 import static dev.langchain4j.quarkus.workshop.RagIngestion.FILE_KEY;
 
@@ -21,6 +23,9 @@ public class SourceAugmenter implements AiResponseAugmenter<String> {
 
     @Inject
     EmbeddingModel embeddingModel;
+
+    @VirtualThreads
+    Executor executor;
 
     record SourceEmbedding(TextSegment textSegment, String file, Embedding embedding) {
 
@@ -31,6 +36,7 @@ public class SourceAugmenter implements AiResponseAugmenter<String> {
         var full = new StringBuilder();
         return stream
                 .invoke(full::append)
+                .emitOn(executor)
                 .onCompletion().continueWith(() -> List.of(" (Sources: "
                         + String.join(", ", getSources(full.toString(), params)) + ")")
                 );

@@ -1,6 +1,7 @@
 package org.acme;
 
 import io.quarkiverse.langchain4j.RegisterAiService;
+import io.quarkiverse.langchain4j.mcp.runtime.McpToolBox;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
 import io.quarkus.runtime.annotations.QuarkusMain;
@@ -26,6 +27,7 @@ public class MyMcpClientApp implements QuarkusApplication {
     @RegisterAiService
     @ApplicationScoped
     interface Assistant {
+        @McpToolBox
         String answer(String question);
     }
 

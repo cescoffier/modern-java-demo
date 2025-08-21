@@ -25,7 +25,10 @@ public class OCRApplication implements QuarkusApplication {
 
     @Override
     public int run(String... args) throws Exception {
-        File file = new File("text.jpg");
+        File file = new File("3-ai-infused-applications/4-images/text.jpg");
+        if (! file.exists()) {
+            file = new File("text.jpg");
+        }
         Log.infof("Converting image...");
         var image = Image.builder().base64Data(encodeFileToBase64(file))
                 .mimeType("image/jpeg").build();

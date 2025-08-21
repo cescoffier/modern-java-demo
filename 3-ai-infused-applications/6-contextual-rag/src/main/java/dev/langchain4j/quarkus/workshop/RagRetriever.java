@@ -1,7 +1,7 @@
 package dev.langchain4j.quarkus.workshop;
 
 import dev.langchain4j.data.segment.TextSegment;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.embedding.EmbeddingModel;
 import dev.langchain4j.rag.DefaultRetrievalAugmentor;
 import dev.langchain4j.rag.RetrievalAugmentor;
@@ -19,7 +19,7 @@ public class RagRetriever {
 
     @Produces
     @ApplicationScoped
-    public RetrievalAugmentor createContextualizedRetriever(EmbeddingStore store, EmbeddingModel model, ChatLanguageModel chatModel) {
+    public RetrievalAugmentor createContextualizedRetriever(EmbeddingStore store, EmbeddingModel model, ChatModel chatModel) {
         var contentRetriever = getExtendedContentRetriever(store, model);
 
         return DefaultRetrievalAugmentor.builder()
