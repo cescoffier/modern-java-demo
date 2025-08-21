@@ -1,6 +1,6 @@
 package me.escoffier.quarkus.ai;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import io.quarkus.runtime.Quarkus;
 import io.quarkus.runtime.QuarkusApplication;
@@ -11,7 +11,7 @@ import jakarta.inject.Inject;
 @QuarkusMain
 public class Main implements QuarkusApplication {
 
-    @Inject ChatLanguageModel model;
+    @Inject ChatModel model;
     @Inject MyAiService ai;
 
     @Override
