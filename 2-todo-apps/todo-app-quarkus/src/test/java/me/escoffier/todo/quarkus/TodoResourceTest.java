@@ -1,15 +1,18 @@
 package me.escoffier.todo.quarkus;
 
 import io.quarkus.test.junit.QuarkusTest;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.core.Is.is;
 
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @QuarkusTest
 class TodoResourceTest {
-
 
     @Test
     @Order(1)

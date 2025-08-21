@@ -42,3 +42,5 @@ build/
 # Specific files to NOT include
 .env
 secret.yaml
+
+**/secret.yaml
