@@ -26,6 +26,7 @@ Each module is self-contained and can be run independently.
 - Java 21 or higher
 - Apache Maven 3.9 or higher
 - Docker or Podman (for modules requiring containerized services via Quarkus Dev Services)
+- Hyperfoil (for performance comparison) - download Hyperfoil from: https://hyperfoil.io/ and add the `bin` directory in your system `PATH`
 
 ## Getting Started
 
