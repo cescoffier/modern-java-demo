@@ -1,11 +1,11 @@
 package dev.langchain4j.quarkus.workshop;
 
+import dev.langchain4j.guardrail.GuardrailException;
 import io.quarkus.logging.Log;
 import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.WebSocket;
 
-import io.quarkiverse.langchain4j.runtime.aiservice.GuardrailException;
 
 @WebSocket(path = "/customer-support-agent")
 public class CustomerSupportAgentWebSocket {
